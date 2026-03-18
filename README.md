@@ -62,7 +62,7 @@ Sources (8+)                              Consumers
 
 | Claude Desktop: ad-hoc вопрос через MCP | MCP Server config |
 |:--:|:--:|
-| ![Chat](assets/demo_swimming.png) | ![MCP](assets/mcp_config.png) |
+| ![Chat](assets/demo_adhoc.png) | ![MCP](assets/mcp_config.png) |
 
 ---
 
