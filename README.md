@@ -25,11 +25,8 @@ Signals → Aggregates → Evidence → Insights → Actions
 ```mermaid
 flowchart TD
     Sources["Sources (8+)<br/>Apple Health · Google Forms · AutoSleep · Session Tracker"]
-    Sources --> Collector
-    Collector --> Dataset[Dataset Layer]
-    Dataset --> Engine[Metric Engine]
-    Engine --> DB["PostgreSQL + pgvector"]
-    DB --> API["DataAPI / MCP Server"]
+    Sources --> Pipeline["Collector → Dataset Layer → Metric Engine → PostgreSQL + pgvector"]
+    Pipeline --> API["DataAPI / MCP Server"]
     API --> Consumers["Consumers<br/>Claude Desktop · Claude Code Agents · Grafana · macOS Alerts"]
 ```
 
