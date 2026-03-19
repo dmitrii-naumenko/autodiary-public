@@ -22,14 +22,31 @@ Signals → Aggregates → Evidence → Insights → Actions
 
 ## Архитектура
 
-```
-Sources (8+)                              Consumers
-  Apple Health · Google Forms             ┌─ Claude Desktop (ad-hoc)
-  AutoSleep · Session tracker             ├─ Claude Code Agents
-       │                                  ├─ Grafana (10+ dashboards)
-  Collector → Dataset Layer → Metric      └─ macOS Alerts
-  Engine → PostgreSQL + pgvector →
-  DataAPI / MCP Server ──────────────────→
+```mermaid
+flowchart LR
+    subgraph Sources["Sources (8+)"]
+        S1[Apple Health]
+        S2[Google Forms]
+        S3[AutoSleep]
+        S4[Session Tracker]
+    end
+
+    subgraph Pipeline
+        C[Collector] --> D[Dataset Layer] --> M[Metric Engine]
+    end
+
+    M --> DB[("PostgreSQL<br/>+ pgvector")]
+    DB --> API[DataAPI / MCP Server]
+
+    subgraph Consumers
+        C1["Claude Desktop<br/>ad-hoc"]
+        C2["Claude Code<br/>Agents"]
+        C3["Grafana<br/>10+ dashboards"]
+        C4[macOS Alerts]
+    end
+
+    Sources --> C
+    API --> Consumers
 ```
 
 **Config-driven:** добавление метрики = одна запись в YAML + один калькулятор.
