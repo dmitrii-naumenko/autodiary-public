@@ -23,30 +23,14 @@ Signals → Aggregates → Evidence → Insights → Actions
 ## Архитектура
 
 ```mermaid
-flowchart LR
-    subgraph Sources["Sources (8+)"]
-        S1[Apple Health]
-        S2[Google Forms]
-        S3[AutoSleep]
-        S4[Session Tracker]
-    end
-
-    subgraph Pipeline
-        C[Collector] --> D[Dataset Layer] --> M[Metric Engine]
-    end
-
-    M --> DB[("PostgreSQL<br/>+ pgvector")]
-    DB --> API[DataAPI / MCP Server]
-
-    subgraph Consumers
-        C1["Claude Desktop<br/>ad-hoc"]
-        C2["Claude Code<br/>Agents"]
-        C3["Grafana<br/>10+ dashboards"]
-        C4[macOS Alerts]
-    end
-
-    Sources --> C
-    API --> Consumers
+flowchart TD
+    Sources["Sources (8+)<br/>Apple Health · Google Forms · AutoSleep · Session Tracker"]
+    Sources --> Collector
+    Collector --> Dataset[Dataset Layer]
+    Dataset --> Engine[Metric Engine]
+    Engine --> DB["PostgreSQL + pgvector"]
+    DB --> API["DataAPI / MCP Server"]
+    API --> Consumers["Consumers<br/>Claude Desktop · Claude Code Agents · Grafana · macOS Alerts"]
 ```
 
 **Config-driven:** добавление метрики = одна запись в YAML + один калькулятор.
